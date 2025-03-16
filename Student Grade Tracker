@@ -1,0 +1,43 @@
+import json
+
+class StudentGradeTracker:
+    def __init__(self):
+        self.students = {}
+
+    def add_student(self, name):
+        """Add a new student to the tracker."""
+        if name in self.students:
+            print("Student already exists.")
+        else:
+            self.students[name] = {}
+
+    def add_grade(self, name, subject, grade):
+        """Add grades for a student."""
+        if name in self.students:
+            self.students[name][subject] = grade
+        else:
+            print("Student not found!")
+
+    def calculate_average(self, name):
+        """Calculate the average grade of a student."""
+        if name in self.students and self.students[name]:
+            grades = self.students[name].values()
+            return sum(grades) / len(grades)
+        else:
+            print("No grades available for this student.")
+            return None
+
+    def display_student(self, name):
+        """Display student details and average grade."""
+        if name in self.students:
+            print(f"\nStudent: {name}")
+            for subject, grade in self.students[name].items():
+                print(f"{subject}: {grade}")
+            avg = self.calculate_average(name)
+            if avg is not None:
+                print(f"Average Grade: {avg:.2f}")
+        else:
+            print("Student not found!")
+
+    def save_data(self, filename="grades.json"):
+        """Save data to a JSON file."""
